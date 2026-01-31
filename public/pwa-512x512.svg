@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="64" fill="#1f2937"/>
+  <g transform="translate(96, 76) scale(8)">
+    <path d="M20 4L4 18h4v14h10v-10h4v10h10V18h4L20 4z" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="30" cy="30" r="9" fill="#facc15" stroke="#1f2937" stroke-width="2"/>
+    <text x="30" y="34" text-anchor="middle" font-size="10" font-weight="bold" font-family="system-ui, sans-serif" fill="#1f2937">₣</text>
+  </g>
+</svg>

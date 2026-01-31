@@ -3,7 +3,10 @@
     <UCard class="h-full bg-gray-800">
       <template #header>
         <div class="flex items-center justify-between">
-          <span class="text-lg font-bold text-white">Navigation</span>
+          <div class="flex items-center gap-2">
+            <img src="/logo.svg" alt="Logo" class="w-7 h-7" />
+            <span class="text-lg font-bold text-white">Navigation</span>
+          </div>
           <UButton
             icon="i-heroicons-x-mark"
             variant="ghost"

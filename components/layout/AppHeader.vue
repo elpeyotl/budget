@@ -10,7 +10,10 @@
           size="sm"
           @click="sidebarOpen = true"
         />
-        <h1 class="text-lg font-bold text-white">Haushalts-Finanz-App</h1>
+        <NuxtLink to="/dashboard" class="flex items-center gap-2">
+          <img src="/logo.svg" alt="Logo" class="w-7 h-7" />
+          <span class="text-lg font-bold text-white">Haushalts-Finanz-App</span>
+        </NuxtLink>
       </div>
       <div class="flex items-center gap-3">
         <UAvatar

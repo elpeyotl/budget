@@ -4,11 +4,11 @@
       <span class="text-gray-300">
         {{ formatMoney(current) }}
       </span>
-      <span class="font-semibold" :class="pct >= 100 ? 'text-green-400' : 'text-primary-400'">
+      <span class="font-semibold" :class="pct >= 100 ? 'text-emerald-400' : 'text-primary-400'">
         {{ pct }}%
       </span>
     </div>
-    <UProgress :value="pct" :color="pct >= 100 ? 'green' : 'primary'" />
+    <UProgress :value="pct" :color="pct >= 100 ? 'emerald' : 'primary'" />
   </div>
 </template>
 

@@ -19,21 +19,21 @@
     </div>
 
     <div class="grid grid-cols-3 gap-2 mb-4">
-      <div class="text-center p-2 bg-green-900/30 rounded">
+      <div class="text-center p-2 bg-emerald-900/20 rounded">
         <div class="text-xs text-gray-400">Einnahmen</div>
-        <div class="text-sm font-semibold text-green-400">
+        <div class="text-sm font-semibold text-emerald-400">
           {{ formatMoney(sumByType('income', person.id)) }}
         </div>
       </div>
-      <div class="text-center p-2 bg-red-900/30 rounded">
+      <div class="text-center p-2 bg-rose-900/20 rounded">
         <div class="text-xs text-gray-400">Ausgaben</div>
-        <div class="text-sm font-semibold text-red-400">
+        <div class="text-sm font-semibold text-rose-400">
           {{ formatMoney(sumByType('expense', person.id)) }}
         </div>
       </div>
-      <div class="text-center p-2 bg-blue-900/30 rounded">
+      <div class="text-center p-2 bg-violet-900/20 rounded">
         <div class="text-xs text-gray-400">Sparen</div>
-        <div class="text-sm font-semibold text-blue-400">
+        <div class="text-sm font-semibold text-violet-400">
           {{ formatMoney(sumByType('savings', person.id)) }}
         </div>
       </div>

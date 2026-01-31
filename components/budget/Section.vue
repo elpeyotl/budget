@@ -88,9 +88,9 @@ const sectionItems = computed(() =>
 const total = computed(() => sumByType(props.type, props.personId))
 
 const totalClass = computed(() => {
-  if (props.type === 'income') return 'text-green-400'
-  if (props.type === 'expense') return 'text-red-400'
-  return 'text-blue-400'
+  if (props.type === 'income') return 'text-emerald-400'
+  if (props.type === 'expense') return 'text-rose-400'
+  return 'text-violet-400'
 })
 
 function onReorder(event: { oldIndex?: number; newIndex?: number }) {

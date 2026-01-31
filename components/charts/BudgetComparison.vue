@@ -12,28 +12,28 @@
         </div>
         <div class="flex gap-1 h-5">
           <div
-            class="bg-green-500/80 rounded-sm"
+            class="bg-emerald-500/70 rounded-sm"
             :style="{ width: barWidth(personIncome(person.id)) }"
           />
           <div
-            class="bg-red-500/80 rounded-sm"
+            class="bg-rose-500/70 rounded-sm"
             :style="{ width: barWidth(personExpenses(person.id)) }"
           />
           <div
-            class="bg-blue-500/80 rounded-sm"
+            class="bg-violet-500/70 rounded-sm"
             :style="{ width: barWidth(personSavings(person.id)) }"
           />
         </div>
       </div>
       <div class="flex gap-4 text-xs text-gray-500 mt-2">
         <span class="flex items-center gap-1">
-          <span class="w-2 h-2 bg-green-500/80 rounded-sm" /> Einnahmen
+          <span class="w-2 h-2 bg-emerald-500/70 rounded-sm" /> Einnahmen
         </span>
         <span class="flex items-center gap-1">
-          <span class="w-2 h-2 bg-red-500/80 rounded-sm" /> Ausgaben
+          <span class="w-2 h-2 bg-rose-500/70 rounded-sm" /> Ausgaben
         </span>
         <span class="flex items-center gap-1">
-          <span class="w-2 h-2 bg-blue-500/80 rounded-sm" /> Sparen
+          <span class="w-2 h-2 bg-violet-500/70 rounded-sm" /> Sparen
         </span>
       </div>
     </div>
