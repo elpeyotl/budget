@@ -18,7 +18,7 @@
       />
     </div>
 
-    <div class="grid grid-cols-3 gap-2 mb-4">
+    <div class="grid grid-cols-4 gap-2 mb-4">
       <div class="text-center p-2 bg-emerald-900/20 rounded">
         <div class="text-xs text-gray-400">Einnahmen</div>
         <div class="text-sm font-semibold text-emerald-400">
@@ -35,6 +35,15 @@
         <div class="text-xs text-gray-400">Sparen</div>
         <div class="text-sm font-semibold text-violet-400">
           {{ formatMoney(sumByType('savings', person.id)) }}
+        </div>
+      </div>
+      <div class="text-center p-2 bg-gray-700/30 rounded">
+        <div class="text-xs text-gray-400">Verfügbar</div>
+        <div
+          class="text-sm font-semibold"
+          :class="personBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'"
+        >
+          {{ formatMoney(personBalance) }}
         </div>
       </div>
     </div>
@@ -74,6 +83,12 @@ const props = defineProps<{
 const { sumByType } = useBudget()
 const { formatMoney } = useFormatters()
 const { deletePerson } = usePersons()
+
+const personBalance = computed(() =>
+  sumByType('income', props.person.id)
+  - sumByType('expense', props.person.id)
+  - sumByType('savings', props.person.id),
+)
 
 const showDeleteConfirm = ref(false)
 

@@ -6,6 +6,8 @@ import { getHouseholdForUser } from '../../utils/household'
 
 const schema = z.object({
   name: z.string().min(1).max(100).optional(),
+  city: z.string().max(100).nullable().optional(),
+  childrenCount: z.number().int().min(0).max(20).optional(),
 })
 
 export default defineEventHandler(async (event) => {

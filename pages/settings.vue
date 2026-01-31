@@ -3,6 +3,7 @@
     <h1 class="text-xl font-bold text-white mb-6">Einstellungen</h1>
     <div class="space-y-6 max-w-lg">
       <SettingsHouseholdName />
+      <SettingsHouseholdProfile />
       <SettingsShareCode />
       <SettingsJoinHousehold />
 

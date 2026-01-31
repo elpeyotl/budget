@@ -20,6 +20,7 @@ const CATEGORIES: Record<BudgetItemType, string[]> = {
     'Steuern',
     'Kommunikation',
     'Abos',
+    'Taschengeld',
     'Freizeit',
     'Restaurants',
     'Kleidung',

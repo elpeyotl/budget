@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-700/50 group"
+    class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-700/50 group cursor-pointer"
+    @click="showEdit = true"
   >
     <div class="flex-1">
       <div class="flex items-center gap-2">
@@ -25,17 +26,14 @@
         {{ account.isLiquid ? 'Liquid' : 'Gebunden' }}
       </UBadge>
 
-      <button
-        class="text-right min-w-[120px] cursor-pointer"
-        @click="showEdit = true"
-      >
+      <div class="text-right min-w-[120px]">
         <div class="text-sm font-semibold text-white tabular-nums">
           {{ formatMoney(account.currentValue) }}
         </div>
         <div class="text-xs text-gray-500">
           {{ formatRelativeDate(account.lastUpdated) }}
         </div>
-      </button>
+      </div>
 
       <UButton
         size="2xs"
@@ -43,7 +41,7 @@
         color="red"
         variant="ghost"
         class="opacity-0 group-hover:opacity-100"
-        @click="showDeleteConfirm = true"
+        @click.stop="showDeleteConfirm = true"
       />
     </div>
 
@@ -54,7 +52,7 @@
       @confirm="onDelete"
     />
 
-    <VermoegenValueModal
+    <VermoegenEditModal
       v-model="showEdit"
       :account="account"
     />

@@ -13,6 +13,8 @@ export const users = sqliteTable('users', {
 export const households = sqliteTable('households', {
   id: text('id').primaryKey(),
   name: text('name').notNull().default('Unser Haushalt'),
+  city: text('city'),
+  childrenCount: integer('children_count').notNull().default(0),
   ownerId: text('owner_id').references(() => users.id),
   shareCode: text('share_code').unique(),
   createdAt: integer('created_at', { mode: 'timestamp' })

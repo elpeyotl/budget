@@ -1,11 +1,14 @@
 import { eq } from 'drizzle-orm'
 import { useDatabase } from '../database'
-import { budgetItems, accounts, goals, persons } from '../database/schema'
+import {
+  households, budgetItems, accounts, goals, persons,
+} from '../database/schema'
 
 export async function gatherFinancialData(householdId: string) {
   const db = useDatabase()
 
-  const [personList, budget, accountList, goalList] = await Promise.all([
+  const [household, personList, budget, accountList, goalList] = await Promise.all([
+    db.query.households.findFirst({ where: eq(households.id, householdId) }),
     db.query.persons.findMany({ where: eq(persons.householdId, householdId) }),
     db.query.budgetItems.findMany({ where: eq(budgetItems.householdId, householdId) }),
     db.query.accounts.findMany({ where: eq(accounts.householdId, householdId) }),
@@ -15,6 +18,11 @@ export async function gatherFinancialData(householdId: string) {
   const personMap = Object.fromEntries(personList.map((p) => [p.id, p.name]))
 
   return {
+    household: {
+      city: household?.city ?? null,
+      childrenCount: household?.childrenCount ?? 0,
+      adultsCount: personList.length,
+    },
     persons: personList.map((p) => ({ name: p.name })),
     budget: budget.map((b) => ({
       person: personMap[b.personId] ?? 'Gemeinsam',
