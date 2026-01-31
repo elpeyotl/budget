@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { useDatabase } from '../../database'
-import { accounts } from '../../database/schema'
+import { accounts, accountHistory } from '../../database/schema'
 import { getHouseholdForUser } from '../../utils/household'
 
 const schema = z.object({
@@ -37,6 +37,14 @@ export default defineEventHandler(async (event) => {
     currentValue: body.currentValue,
     lastUpdated: new Date(),
   }).returning()
+
+  if (account.currentValue > 0) {
+    await db.insert(accountHistory).values({
+      id: crypto.randomUUID(),
+      accountId: account.id,
+      value: account.currentValue,
+    })
+  }
 
   return account
 })
