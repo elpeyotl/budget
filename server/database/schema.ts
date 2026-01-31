@@ -65,6 +65,8 @@ export const accounts = sqliteTable('accounts', {
   name: text('name').notNull(),
   institution: text('institution'),
   type: text('type').notNull(),
+  assetClass: text('asset_class'),
+  ticker: text('ticker'),
   isLiquid: integer('is_liquid', { mode: 'boolean' })
     .notNull()
     .default(true),

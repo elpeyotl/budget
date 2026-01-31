@@ -8,6 +8,8 @@ const schema = z.object({
   name: z.string().min(1).max(100).optional(),
   institution: z.string().max(100).nullable().optional(),
   type: z.enum(['bank', 'investment', 'crypto', 'pension', 'other']).optional(),
+  assetClass: z.string().nullable().optional(),
+  ticker: z.string().max(20).nullable().optional(),
   isLiquid: z.boolean().optional(),
   currentValue: z.number().int().optional(),
   personId: z.string().nullable().optional(),

@@ -41,6 +41,8 @@ export function useAccounts() {
     name: string
     institution?: string | null
     type: AccountType
+    assetClass?: string | null
+    ticker?: string | null
     isLiquid: boolean
     currentValue: number
     personId?: string | null

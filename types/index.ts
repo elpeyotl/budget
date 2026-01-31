@@ -36,6 +36,20 @@ export type BudgetItemType = 'income' | 'expense' | 'savings'
 // Account types
 export type AccountType = 'bank' | 'investment' | 'crypto' | 'pension' | 'other'
 
+// Asset classes
+export type AssetClass =
+  | 'cash'
+  | 'etf_world'
+  | 'etf_emerging'
+  | 'etf_bonds'
+  | 'single_stock'
+  | 'bitcoin'
+  | 'ethereum'
+  | 'crypto_other'
+  | 'pension_3a'
+  | 'real_estate'
+  | 'other'
+
 // Goal target types
 export type GoalTargetType = 'liquid' | 'net_worth' | 'custom'
 

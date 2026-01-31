@@ -66,6 +66,7 @@ const links = [
   { to: '/dashboard', label: 'Budget', icon: 'i-heroicons-calculator' },
   { to: '/dashboard/vermoegen', label: 'Vermögen', icon: 'i-heroicons-banknotes' },
   { to: '/dashboard/ziele', label: 'Ziele', icon: 'i-heroicons-flag' },
+  { to: '/dashboard/analyse', label: 'Analyse', icon: 'i-heroicons-sparkles' },
   { to: '/settings', label: 'Einstellungen', icon: 'i-heroicons-cog-6-tooth' },
 ]
 

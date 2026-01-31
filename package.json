@@ -14,11 +14,13 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.72.1",
     "@libsql/client": "^0.17.0",
     "@nuxt/ui": "^2.22.3",
     "@vite-pwa/nuxt": "^1.1.0",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
+    "marked": "^17.0.1",
     "nuxt": "^3.21.0",
     "nuxt-auth-utils": "^0.5.28",
     "tailwindcss": "^3.4.19",

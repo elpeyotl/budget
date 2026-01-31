@@ -25,6 +25,7 @@ const links = [
   { to: '/dashboard', label: 'Budget' },
   { to: '/dashboard/vermoegen', label: 'Vermögen' },
   { to: '/dashboard/ziele', label: 'Ziele' },
+  { to: '/dashboard/analyse', label: 'Analyse' },
   { to: '/settings', label: 'Einstellungen' },
 ]
 

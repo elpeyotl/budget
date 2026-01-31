@@ -9,8 +9,10 @@
           ({{ personName }})
         </span>
       </div>
-      <div v-if="account.institution" class="text-xs text-gray-500">
-        {{ account.institution }}
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <span v-if="account.institution">{{ account.institution }}</span>
+        <span v-if="assetLabel">{{ assetLabel }}</span>
+        <span v-if="account.ticker" class="font-mono">{{ account.ticker }}</span>
       </div>
     </div>
 
@@ -69,6 +71,11 @@ const props = defineProps<{
 
 const { formatMoney, formatRelativeDate } = useFormatters()
 const { deleteAccount } = useAccounts()
+const { labelFor } = useAssetClasses()
+
+const assetLabel = computed(() =>
+  props.account.assetClass ? labelFor(props.account.assetClass) : '',
+)
 
 const showDeleteConfirm = ref(false)
 const showEdit = ref(false)

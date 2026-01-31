@@ -8,6 +8,8 @@ const schema = z.object({
   name: z.string().min(1).max(100),
   institution: z.string().max(100).nullable().optional(),
   type: z.enum(['bank', 'investment', 'crypto', 'pension', 'other']),
+  assetClass: z.string().nullable().optional(),
+  ticker: z.string().max(20).nullable().optional(),
   isLiquid: z.boolean().default(true),
   currentValue: z.number().int().default(0),
 })
@@ -29,6 +31,8 @@ export default defineEventHandler(async (event) => {
     name: body.name,
     institution: body.institution ?? null,
     type: body.type,
+    assetClass: body.assetClass ?? null,
+    ticker: body.ticker ?? null,
     isLiquid: body.isLiquid,
     currentValue: body.currentValue,
     lastUpdated: new Date(),
