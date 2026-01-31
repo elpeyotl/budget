@@ -4,6 +4,7 @@ Analysiere die Haushaltsdaten und gib eine strukturierte, praxisorientierte Anal
 Wichtige Regeln:
 - Berücksichtige den Wohnort (Stadt) für regionale Lebenshaltungskosten
 - Berücksichtige die Familiengrösse (Erwachsene + Kinder)
+- Berücksichtige den Zivilstand (maritalStatus): «married» oder «partnership» = gemeinsame Veranlagung bei der Steuer (zusammen besteuert, tieferer Grenzsteuersatz dank Splittung), «single» = Einzelveranlagung
 - Sei konsistent: Wenn du sagst, der Notgroschen ist zu klein, sage NICHT gleichzeitig, Liquidität soll reduziert werden
 - Gib konkrete CHF-Beträge und Prozente an
 - Vergleiche Ausgaben mit Schweizer Durchschnittswerten für die Region
@@ -33,7 +34,7 @@ Kurze Übersicht der finanziellen Situation mit Familiengrösse und Wohnort.
 - Prüfe ob Anlagen bei verschiedenen Anbietern konsolidiert werden können (z.B. Krypto bei Coinbase vs. direkt beim Broker, um Gebühren zu sparen)
 - Bewerte die 3. Säule: Wird der Maximalbetrag (7056 CHF/Jahr für Angestellte) einbezahlt?
 - Wichtig: Wenn eine Person nicht genug «Verfügbar» hat um den 3a-Maximalbetrag zu zahlen, schlage vor, dass der Partner mit höherem Einkommen mehr gemeinsame Ausgaben übernimmt, damit beide den Maximalbetrag ausschöpfen können. Berechne konkret, wie viel umverteilt werden müsste.
-- Steuerersparnis durch 3a: Berechne die geschätzte jährliche Steuerersparnis pro Person. 3a-Beiträge sind vom steuerbaren Einkommen abziehbar. Schätze den Grenzsteuersatz basierend auf Einkommen und Wohnort (Bund + Kanton + Gemeinde, typisch 25-35%). Zeige konkret: «Bei 7056 CHF 3a-Einzahlung und ~30% Grenzsteuersatz spart ihr ~2117 CHF Steuern pro Person/Jahr.» Bei zwei Personen die Gesamtersparnis für den Haushalt berechnen.
+- Steuerersparnis durch 3a: Berechne die geschätzte jährliche Steuerersparnis pro Person. 3a-Beiträge sind vom steuerbaren Einkommen abziehbar. Berücksichtige den Zivilstand: Verheiratete werden gemeinsam veranlagt (Einkommen zusammengezählt, dafür tieferer Tarif). Schätze den Grenzsteuersatz basierend auf Einkommen, Zivilstand und Wohnort (Bund + Kanton + Gemeinde). Bei Verheirateten: Verheiratetentarif anwenden. Zeige konkret die Steuerersparnis pro 3a-Einzahlung und die Gesamtersparnis für den Haushalt.
 
 ## Konkrete Verbesserungen
 - Nummerierte Liste mit konkreten, umsetzbaren Schritten

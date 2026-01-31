@@ -5,6 +5,14 @@
       <UFormGroup label="Stadt" name="city">
         <UInput v-model="city" placeholder="z.B. Zürich, Basel, Bern" />
       </UFormGroup>
+      <UFormGroup label="Zivilstand" name="maritalStatus">
+        <USelect
+          v-model="maritalStatus"
+          :options="maritalOptions"
+          option-attribute="label"
+          value-attribute="value"
+        />
+      </UFormGroup>
       <UFormGroup label="Anzahl Kinder" name="childrenCount">
         <UInput
           v-model.number="childrenCount"
@@ -28,12 +36,20 @@ const toast = useToast()
 
 const city = ref('')
 const childrenCount = ref(0)
+const maritalStatus = ref('single')
 const isSaving = ref(false)
+
+const maritalOptions = [
+  { label: 'Ledig', value: 'single' },
+  { label: 'Verheiratet', value: 'married' },
+  { label: 'Eingetragene Partnerschaft', value: 'partnership' },
+]
 
 watch(household, (h) => {
   if (h) {
     city.value = h.city ?? ''
     childrenCount.value = h.childrenCount ?? 0
+    maritalStatus.value = h.maritalStatus ?? 'single'
   }
 }, { immediate: true })
 
@@ -45,6 +61,7 @@ async function save() {
       body: {
         city: city.value || null,
         childrenCount: childrenCount.value,
+        maritalStatus: maritalStatus.value,
       },
     })
     await refresh()

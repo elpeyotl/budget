@@ -21,6 +21,7 @@ export async function gatherFinancialData(householdId: string) {
     household: {
       city: household?.city ?? null,
       childrenCount: household?.childrenCount ?? 0,
+      maritalStatus: household?.maritalStatus ?? 'single',
       adultsCount: personList.length,
     },
     persons: personList.map((p) => ({ name: p.name })),
