@@ -1,10 +1,9 @@
 <template>
   <UInput
-    :model-value="displayValue"
-    type="text"
-    inputmode="decimal"
-    placeholder="0.00"
-    @update:model-value="onInput"
+    v-model="input"
+    type="number"
+    inputmode="numeric"
+    placeholder="0"
     @blur="onBlur"
   >
     <template #trailing>
@@ -22,21 +21,22 @@ const emit = defineEmits<{
   'update:modelValue': [value: number]
 }>()
 
-const displayValue = computed(() => {
-  if (props.modelValue === 0) return ''
-  return (props.modelValue / 100).toFixed(2)
+const input = ref('')
+
+watch(() => props.modelValue, (val) => {
+  const chf = Math.round(val / 100)
+  if (chf !== Number(input.value)) {
+    input.value = chf === 0 ? '' : String(chf)
+  }
+}, { immediate: true })
+
+watch(input, (val) => {
+  const num = parseInt(val, 10)
+  emit('update:modelValue', isNaN(num) ? 0 : num * 100)
 })
 
-function onInput(val: string | number) {
-  const str = String(val).replace(/[^0-9.,\-]/g, '').replace(',', '.')
-  const num = parseFloat(str)
-  if (!isNaN(num)) {
-    emit('update:modelValue', Math.round(num * 100))
-  }
-}
-
 function onBlur() {
-  if (props.modelValue === 0) return
-  emit('update:modelValue', props.modelValue)
+  const num = parseInt(input.value, 10)
+  input.value = isNaN(num) || num === 0 ? '' : String(num)
 }
 </script>
