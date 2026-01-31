@@ -10,7 +10,12 @@
           <UInput v-model="form.name" placeholder="z.B. Lohn, Miete..." />
         </UFormGroup>
         <UFormGroup label="Kategorie" name="category">
-          <UInput v-model="form.category" placeholder="Optional" />
+          <USelect
+            v-model="form.category"
+            :options="categoryOptions"
+            option-attribute="label"
+            value-attribute="value"
+          />
         </UFormGroup>
         <UFormGroup label="Betrag" name="amount">
           <SharedMoneyInput v-model="form.amount" />
@@ -45,7 +50,10 @@ const props = defineProps<{
 
 const isOpen = defineModel<boolean>({ default: false })
 const { addItem } = useBudget()
+const { optionsFor } = useBudgetCategories()
 const isSubmitting = ref(false)
+
+const categoryOptions = computed(() => optionsFor(props.type))
 
 const TYPE_LABELS: Record<BudgetItemType, string> = {
   income: 'Einnahme',

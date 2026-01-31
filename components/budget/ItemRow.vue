@@ -21,6 +21,14 @@
         @keydown.enter="saveEdit"
         @keydown.escape="cancelEdit"
       />
+      <USelect
+        v-model="editCategory"
+        :options="categoryOptions"
+        option-attribute="label"
+        value-attribute="value"
+        size="sm"
+        class="w-40"
+      />
       <SharedMoneyInput
         v-model="editAmount"
         class="w-32"
@@ -52,34 +60,35 @@
 <script setup lang="ts">
 import type { BudgetItem } from '~/types'
 
-const props = defineProps<{
-  item: BudgetItem
-}>()
-
-defineEmits<{
-  delete: [id: string]
-}>()
+const props = defineProps<{ item: BudgetItem }>()
+defineEmits<{ delete: [id: string] }>()
 
 const { formatMoney } = useFormatters()
 const { updateItem } = useBudget()
+const { optionsFor } = useBudgetCategories()
 
 const isEditing = ref(false)
 const editName = ref('')
+const editCategory = ref('')
 const editAmount = ref(0)
+
+const categoryOptions = computed(() =>
+  optionsFor(props.item.type as 'income' | 'expense' | 'savings'),
+)
 
 function startEdit() {
   editName.value = props.item.name
+  editCategory.value = props.item.category ?? ''
   editAmount.value = props.item.amount
   isEditing.value = true
 }
 
-function cancelEdit() {
-  isEditing.value = false
-}
+function cancelEdit() { isEditing.value = false }
 
 async function saveEdit() {
   await updateItem(props.item.id, {
     name: editName.value,
+    category: editCategory.value || null,
     amount: editAmount.value,
   })
   isEditing.value = false
