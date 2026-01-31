@@ -25,6 +25,7 @@
     </div>
 
     <div v-if="!isLoading && persons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+      <BudgetCategorySummary />
       <ChartsBudgetComparison />
       <ChartsExpenseBreakdown />
     </div>
