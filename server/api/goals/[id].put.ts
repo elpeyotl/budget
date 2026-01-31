@@ -8,6 +8,7 @@ const schema = z.object({
   name: z.string().min(1).max(100).optional(),
   targetAmount: z.number().int().min(1).optional(),
   targetType: z.enum(['liquid', 'net_worth', 'custom']).optional(),
+  includePension: z.boolean().optional(),
   deadline: z.string().nullable().optional(),
 })
 

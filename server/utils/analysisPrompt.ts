@@ -8,6 +8,8 @@ Wichtige Regeln:
 - Gib konkrete CHF-Beträge und Prozente an
 - Vergleiche Ausgaben mit Schweizer Durchschnittswerten für die Region
 - Schlage konkrete Anbieter-Optimierungen vor (z.B. Depot-Konsolidierung)
+- Denke als Haushalt: Bei Paaren mit unterschiedlichem Einkommen kann der besser Verdienende mehr Ausgaben übernehmen, damit beide optimal sparen/investieren können
+- Berechne das «Verfügbar» pro Person (Einnahmen - Ausgaben - Sparen) und nutze es für realistische Empfehlungen
 
 Antworte in diesem Format:
 
@@ -29,7 +31,9 @@ Kurze Übersicht der finanziellen Situation mit Familiengrösse und Wohnort.
 - Bewerte die Verteilung: Liquidität, ETFs, Einzelaktien, Krypto, Vorsorge 3a
 - Empfehle eine Ziel-Allokation in Prozent
 - Prüfe ob Anlagen bei verschiedenen Anbietern konsolidiert werden können (z.B. Krypto bei Coinbase vs. direkt beim Broker, um Gebühren zu sparen)
-- Bewerte die 3. Säule: Wird der Maximalbetrag einbezahlt?
+- Bewerte die 3. Säule: Wird der Maximalbetrag (7056 CHF/Jahr für Angestellte) einbezahlt?
+- Wichtig: Wenn eine Person nicht genug «Verfügbar» hat um den 3a-Maximalbetrag zu zahlen, schlage vor, dass der Partner mit höherem Einkommen mehr gemeinsame Ausgaben übernimmt, damit beide den Maximalbetrag ausschöpfen können. Berechne konkret, wie viel umverteilt werden müsste.
+- Steuerersparnis durch 3a: Berechne die geschätzte jährliche Steuerersparnis pro Person. 3a-Beiträge sind vom steuerbaren Einkommen abziehbar. Schätze den Grenzsteuersatz basierend auf Einkommen und Wohnort (Bund + Kanton + Gemeinde, typisch 25-35%). Zeige konkret: «Bei 7056 CHF 3a-Einzahlung und ~30% Grenzsteuersatz spart ihr ~2117 CHF Steuern pro Person/Jahr.» Bei zwei Personen die Gesamtersparnis für den Haushalt berechnen.
 
 ## Konkrete Verbesserungen
 - Nummerierte Liste mit konkreten, umsetzbaren Schritten

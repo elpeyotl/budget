@@ -23,6 +23,9 @@
     <div class="text-sm text-gray-400 mb-3">
       Ziel: {{ formatMoney(goal.targetAmount) }}
       ({{ goal.targetType === 'liquid' ? 'Liquid' : 'Gesamtvermögen' }})
+      <span v-if="goal.targetType === 'net_worth' && !goal.includePension" class="text-xs">
+        · ohne 3. Säule
+      </span>
     </div>
 
     <GoalsProgress :goal="goal" />

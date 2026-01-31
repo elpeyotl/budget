@@ -95,6 +95,9 @@ export const goals = sqliteTable('goals', {
   name: text('name').notNull(),
   targetAmount: integer('target_amount').notNull(),
   targetType: text('target_type').notNull().default('liquid'),
+  includePension: integer('include_pension', { mode: 'boolean' })
+    .notNull()
+    .default(false),
   deadline: integer('deadline', { mode: 'timestamp' }),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()

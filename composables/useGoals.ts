@@ -17,8 +17,12 @@ export function useGoals() {
   }
 
   function currentAmount(goal: Goal) {
-    const { liquidTotal, netWorthTotal } = useAccounts()
-    return goal.targetType === 'liquid' ? liquidTotal.value : netWorthTotal.value
+    const { accounts, liquidTotal, netWorthTotal } = useAccounts()
+    if (goal.targetType === 'liquid') return liquidTotal.value
+    if (goal.includePension) return netWorthTotal.value
+    return accounts.value
+      .filter((a) => a.type !== 'pension')
+      .reduce((sum, a) => sum + a.currentValue, 0)
   }
 
   function progress(goal: Goal) {
@@ -50,6 +54,7 @@ export function useGoals() {
     name: string
     targetAmount: number
     targetType: string
+    includePension?: boolean
     deadline?: string | null
   }) {
     try {

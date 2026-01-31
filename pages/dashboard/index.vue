@@ -6,6 +6,7 @@
     </div>
 
     <BudgetSummary />
+    <BudgetSurplusTip />
 
     <div v-if="isLoading" class="flex gap-6">
       <div v-for="i in 2" :key="i" class="flex-1 space-y-3">

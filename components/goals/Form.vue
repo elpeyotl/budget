@@ -21,23 +21,21 @@
             value-attribute="value"
           />
         </UFormGroup>
+        <div v-if="form.targetType === 'net_worth'" class="flex items-center gap-2">
+          <UToggle v-model="form.includePension" />
+          <span class="text-sm text-gray-300">3. Säule einbeziehen</span>
+        </div>
         <UFormGroup label="Deadline (optional)" name="deadline">
           <UInput v-model="form.deadline" type="date" />
         </UFormGroup>
       </div>
       <template #footer>
-        <div class="flex justify-end gap-2">
-          <UButton variant="ghost" @click="isOpen = false">
-            Abbrechen
-          </UButton>
-          <UButton
-            :disabled="!form.name || form.targetAmount <= 0"
-            :loading="isSubmitting"
-            @click="onSubmit"
-          >
-            Speichern
-          </UButton>
-        </div>
+        <VermoegenFormActions
+          :disabled="!form.name || form.targetAmount <= 0"
+          :loading="isSubmitting"
+          @cancel="isOpen = false"
+          @submit="onSubmit"
+        />
       </template>
     </UCard>
   </UModal>
@@ -46,10 +44,7 @@
 <script setup lang="ts">
 import type { Goal } from '~/types'
 
-const props = defineProps<{
-  editGoal?: Goal | null
-}>()
-
+const props = defineProps<{ editGoal?: Goal | null }>()
 const isOpen = defineModel<boolean>({ default: false })
 const { addGoal, updateGoal } = useGoals()
 const isSubmitting = ref(false)
@@ -63,6 +58,7 @@ const form = reactive({
   name: '',
   targetAmount: 0,
   targetType: 'liquid',
+  includePension: false,
   deadline: '',
 })
 
@@ -71,11 +67,14 @@ watch(isOpen, (open) => {
     form.name = props.editGoal.name
     form.targetAmount = props.editGoal.targetAmount
     form.targetType = props.editGoal.targetType
+    form.includePension = props.editGoal.includePension ?? false
     form.deadline = props.editGoal.deadline
       ? new Date(props.editGoal.deadline).toISOString().split('T')[0]
       : ''
   } else if (open) {
-    Object.assign(form, { name: '', targetAmount: 0, targetType: 'liquid', deadline: '' })
+    Object.assign(form, {
+      name: '', targetAmount: 0, targetType: 'liquid', includePension: false, deadline: '',
+    })
   }
 })
 
@@ -85,6 +84,7 @@ async function onSubmit() {
     name: form.name,
     targetAmount: form.targetAmount,
     targetType: form.targetType,
+    includePension: form.targetType === 'net_worth' ? form.includePension : false,
     deadline: form.deadline || null,
   }
 

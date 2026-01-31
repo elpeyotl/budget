@@ -7,6 +7,7 @@ const schema = z.object({
   name: z.string().min(1).max(100),
   targetAmount: z.number().int().min(1),
   targetType: z.enum(['liquid', 'net_worth', 'custom']).default('liquid'),
+  includePension: z.boolean().default(false),
   deadline: z.string().nullable().optional(),
 })
 
@@ -26,6 +27,7 @@ export default defineEventHandler(async (event) => {
     name: body.name,
     targetAmount: body.targetAmount,
     targetType: body.targetType,
+    includePension: body.includePension,
     deadline: body.deadline ? new Date(body.deadline) : null,
   }).returning()
 
