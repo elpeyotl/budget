@@ -32,18 +32,27 @@ export function useGoals() {
 
   function goalBreakdown(goal: Goal) {
     const { totalSavings, monthlyBalance } = useBudget()
+    const { accounts } = useAccounts()
+    const { annualReturnFor } = useAssetClasses()
     const current = currentAmount(goal)
     const remaining = goal.targetAmount - current
     const savings = totalSavings.value
     const surplus = Math.max(0, monthlyBalance.value)
-    return { current, remaining, savings, surplus, monthly: savings + surplus }
+    const relevant = accounts.value.filter((a) =>
+      goal.targetType === 'liquid' ? a.isLiquid : (goal.includePension || a.type !== 'pension'),
+    )
+    const yearReturn = relevant.reduce((s, a) => s + a.currentValue * (annualReturnFor(a.assetClass) / 100), 0)
+    const monthlyReturn = Math.round(yearReturn / 12)
+    const monthly = savings + surplus
+    return { current, remaining, savings, surplus, monthly, monthlyReturn }
   }
 
   function monthsToGoal(goal: Goal) {
-    const { remaining, monthly } = goalBreakdown(goal)
+    const { remaining, monthly, monthlyReturn } = goalBreakdown(goal)
     if (remaining <= 0) return 0
-    if (monthly <= 0) return Infinity
-    return Math.ceil(remaining / monthly)
+    const effective = monthly + monthlyReturn
+    if (effective <= 0) return Infinity
+    return Math.ceil(remaining / effective)
   }
 
   function estimatedDate(goal: Goal) {
@@ -56,39 +65,24 @@ export function useGoals() {
 
   async function addGoal(data: { name: string; targetAmount: number; targetType: string; includePension?: boolean; deadline?: string | null }) {
     try {
-      const goal = await $fetch<Goal>('/api/goals', {
-        method: 'POST',
-        body: data,
-      })
+      const goal = await $fetch<Goal>('/api/goals', { method: 'POST', body: data })
       goals.value = [...goals.value, goal]
       toast.add({ title: 'Ziel hinzugefügt' })
-      return goal
-    } catch {
-      toast.add({ title: 'Fehler beim Hinzufügen', color: 'red' })
-    }
+    } catch { toast.add({ title: 'Fehler beim Hinzufügen', color: 'red' }) }
   }
 
   async function updateGoal(id: string, data: Partial<Goal>) {
     const backup = [...goals.value]
     goals.value = goals.value.map((g) => (g.id === id ? { ...g, ...data } : g))
-    try {
-      await $fetch(`/api/goals/${id}`, { method: 'PUT', body: data })
-    } catch {
-      goals.value = backup
-      toast.add({ title: 'Fehler beim Aktualisieren', color: 'red' })
-    }
+    try { await $fetch(`/api/goals/${id}`, { method: 'PUT', body: data }) }
+    catch { goals.value = backup; toast.add({ title: 'Fehler', color: 'red' }) }
   }
 
   async function deleteGoal(id: string) {
     const backup = [...goals.value]
     goals.value = goals.value.filter((g) => g.id !== id)
-    try {
-      await $fetch(`/api/goals/${id}`, { method: 'DELETE' })
-      toast.add({ title: 'Ziel gelöscht' })
-    } catch {
-      goals.value = backup
-      toast.add({ title: 'Fehler beim Löschen', color: 'red' })
-    }
+    try { await $fetch(`/api/goals/${id}`, { method: 'DELETE' }); toast.add({ title: 'Gelöscht' }) }
+    catch { goals.value = backup; toast.add({ title: 'Fehler', color: 'red' }) }
   }
 
   onMounted(fetch)
