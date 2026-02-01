@@ -18,9 +18,10 @@
           v-for="row in rows"
           :key="row.category"
           class="border-b border-gray-700/50"
+          :style="{ backgroundColor: row.color + '18' }"
         >
-          <td class="py-2 text-gray-200">
-            <span class="inline-block w-2.5 h-2.5 rounded-full mr-2" :style="{ backgroundColor: row.color }" />
+          <td class="py-2 pl-2 text-gray-200 rounded-l">
+            <span class="inline-block w-1 h-4 rounded-full mr-2 align-middle" :style="{ backgroundColor: row.color }" />
             {{ row.category }}
           </td>
           <td class="py-2 text-right text-gray-300">{{ formatMoney(row.monthly) }}</td>
