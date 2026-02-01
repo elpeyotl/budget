@@ -38,29 +38,34 @@ export function useGoals() {
     const remaining = goal.targetAmount - current
     const savings = totalSavings.value
     const surplus = Math.max(0, monthlyBalance.value)
+    const monthly = savings + surplus
     const relevant = accounts.value.filter((a) =>
       goal.targetType === 'liquid' ? a.isLiquid : (goal.includePension || a.type !== 'pension'),
     )
-    const yearReturn = relevant.reduce((s, a) => s + a.currentValue * (annualReturnFor(a.assetClass) / 100), 0)
-    const monthlyReturn = Math.round(yearReturn / 12)
-    const monthly = savings + surplus
-    return { current, remaining, savings, surplus, monthly, monthlyReturn }
+    const totalRelevant = relevant.reduce((s, a) => s + a.currentValue, 0)
+    const avgReturn = totalRelevant > 0
+      ? relevant.reduce((s, a) => s + a.currentValue * annualReturnFor(a.assetClass), 0) / totalRelevant : 0
+    return { current, remaining, savings, surplus, monthly, avgReturn }
   }
 
   function monthsToGoal(goal: Goal) {
-    const { remaining, monthly, monthlyReturn } = goalBreakdown(goal)
-    if (remaining <= 0) return 0
-    const effective = monthly + monthlyReturn
-    if (effective <= 0) return Infinity
-    return Math.ceil(remaining / effective)
+    const { current, monthly, avgReturn } = goalBreakdown(goal)
+    const target = goal.targetAmount
+    if (current >= target) return 0
+    if (monthly <= 0 && avgReturn <= 0) return Infinity
+    const r = avgReturn / 100 / 12
+    let balance = current
+    for (let m = 1; m <= 600; m++) {
+      balance = balance * (1 + r) + monthly
+      if (balance >= target) return m
+    }
+    return Infinity
   }
 
   function estimatedDate(goal: Goal) {
-    const months = monthsToGoal(goal)
-    if (months === Infinity || months === 0) return null
-    const date = new Date()
-    date.setMonth(date.getMonth() + months)
-    return date
+    const m = monthsToGoal(goal)
+    if (m === Infinity || m === 0) return null
+    const d = new Date(); d.setMonth(d.getMonth() + m); return d
   }
 
   async function addGoal(data: { name: string; targetAmount: number; targetType: string; includePension?: boolean; deadline?: string | null }) {
