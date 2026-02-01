@@ -34,6 +34,16 @@ export function useBudget() {
   const totalIncome = computed(() => sumByType('income'))
   const totalExpenses = computed(() => sumByType('expense'))
   const totalSavings = computed(() => sumByType('savings'))
+  const LIQUID_CATEGORIES = ['Notgroschen']
+  const liquidSavings = computed(() =>
+    items.value.filter((i) => i.type === 'savings' && LIQUID_CATEGORIES.includes(i.category ?? '')).reduce((s, i) => s + i.amount, 0),
+  )
+  const investedSavings = computed(() =>
+    items.value.filter((i) => i.type === 'savings' && !LIQUID_CATEGORIES.includes(i.category ?? '') && i.category !== 'Vorsorge 3a').reduce((s, i) => s + i.amount, 0),
+  )
+  const pensionSavings = computed(() =>
+    items.value.filter((i) => i.type === 'savings' && i.category === 'Vorsorge 3a').reduce((s, i) => s + i.amount, 0),
+  )
   const monthlyBalance = computed(
     () => totalIncome.value - totalExpenses.value - totalSavings.value,
   )
@@ -90,7 +100,7 @@ export function useBudget() {
 
   return {
     items, byPerson, isLoading,
-    totalIncome, totalExpenses, totalSavings, monthlyBalance,
+    totalIncome, totalExpenses, totalSavings, liquidSavings, investedSavings, pensionSavings, monthlyBalance,
     sumByType, addItem, updateItem, deleteItem, reorderItems, refresh: fetch,
   }
 }

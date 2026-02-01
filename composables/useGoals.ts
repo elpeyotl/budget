@@ -3,6 +3,9 @@ export function useGoals() {
   const goals = useState<Goal[]>('goals', () => [])
   const isLoading = ref(true)
   const toast = useToast()
+  const { liquidSavings, totalSavings, pensionSavings, monthlyBalance } = useBudget()
+  const { accounts, liquidTotal, netWorthTotal } = useAccounts()
+  const { annualReturnFor } = useAssetClasses()
 
   async function fetch() {
     isLoading.value = true
@@ -16,7 +19,6 @@ export function useGoals() {
   }
 
   function currentAmount(goal: Goal) {
-    const { accounts, liquidTotal, netWorthTotal } = useAccounts()
     if (goal.targetType === 'liquid') return liquidTotal.value
     if (goal.includePension) return netWorthTotal.value
     return accounts.value
@@ -31,12 +33,11 @@ export function useGoals() {
   }
 
   function goalBreakdown(goal: Goal) {
-    const { totalSavings, monthlyBalance } = useBudget()
-    const { accounts } = useAccounts()
-    const { annualReturnFor } = useAssetClasses()
     const current = currentAmount(goal)
     const remaining = goal.targetAmount - current
-    const savings = totalSavings.value
+    const savings = goal.targetType === 'liquid'
+      ? liquidSavings.value
+      : totalSavings.value - (goal.includePension ? 0 : pensionSavings.value)
     const surplus = Math.max(0, monthlyBalance.value)
     const monthly = savings + surplus
     const relevant = accounts.value.filter((a) =>
@@ -45,7 +46,7 @@ export function useGoals() {
     const totalRelevant = relevant.reduce((s, a) => s + a.currentValue, 0)
     const avgReturn = totalRelevant > 0
       ? relevant.reduce((s, a) => s + a.currentValue * annualReturnFor(a.assetClass), 0) / totalRelevant : 0
-    return { current, remaining, savings, surplus, monthly, avgReturn }
+    return { current, remaining, savings, surplus, monthly, avgReturn, relevant }
   }
 
   function monthsToGoal(goal: Goal) {

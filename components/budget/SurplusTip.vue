@@ -20,15 +20,19 @@ const liquidTotal = computed(() =>
   accounts.value.filter((a) => a.isLiquid).reduce((sum, a) => sum + a.currentValue, 0),
 )
 
-const unreachedGoal = computed(() =>
-  goals.value.find((g) => {
+const unreachedGoal = computed(() => {
+  const sorted = [...goals.value].sort((a, b) =>
+    a.targetType === 'liquid' && b.targetType !== 'liquid' ? -1
+      : a.targetType !== 'liquid' && b.targetType === 'liquid' ? 1 : 0,
+  )
+  return sorted.find((g) => {
     if (g.targetType === 'liquid') return liquidTotal.value < g.targetAmount
     const total = accounts.value
       .filter((a) => g.includePension || a.type !== 'pension')
       .reduce((sum, a) => sum + a.currentValue, 0)
     return total < g.targetAmount
-  }),
-)
+  })
+})
 
 const tipTitle = computed(() => {
   const chf = formatMoney(monthlyBalance.value)
