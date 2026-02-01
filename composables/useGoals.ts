@@ -1,5 +1,4 @@
 import type { Goal } from '~/types'
-
 export function useGoals() {
   const goals = useState<Goal[]>('goals', () => [])
   const isLoading = ref(true)
@@ -31,13 +30,18 @@ export function useGoals() {
     return Math.min(100, Math.round((current / goal.targetAmount) * 100))
   }
 
-  function monthsToGoal(goal: Goal) {
+  function goalBreakdown(goal: Goal) {
     const { totalSavings, monthlyBalance } = useBudget()
     const current = currentAmount(goal)
     const remaining = goal.targetAmount - current
-    if (remaining <= 0) return 0
+    const savings = totalSavings.value
+    const surplus = Math.max(0, monthlyBalance.value)
+    return { current, remaining, savings, surplus, monthly: savings + surplus }
+  }
 
-    const monthly = totalSavings.value + Math.max(0, monthlyBalance.value)
+  function monthsToGoal(goal: Goal) {
+    const { remaining, monthly } = goalBreakdown(goal)
+    if (remaining <= 0) return 0
     if (monthly <= 0) return Infinity
     return Math.ceil(remaining / monthly)
   }
@@ -50,13 +54,7 @@ export function useGoals() {
     return date
   }
 
-  async function addGoal(data: {
-    name: string
-    targetAmount: number
-    targetType: string
-    includePension?: boolean
-    deadline?: string | null
-  }) {
+  async function addGoal(data: { name: string; targetAmount: number; targetType: string; includePension?: boolean; deadline?: string | null }) {
     try {
       const goal = await $fetch<Goal>('/api/goals', {
         method: 'POST',
@@ -94,10 +92,9 @@ export function useGoals() {
   }
 
   onMounted(fetch)
-
   return {
     goals, isLoading,
-    currentAmount, progress, monthsToGoal, estimatedDate,
+    currentAmount, progress, monthsToGoal, goalBreakdown, estimatedDate,
     addGoal, updateGoal, deleteGoal, refresh: fetch,
   }
 }

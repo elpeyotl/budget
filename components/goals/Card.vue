@@ -45,6 +45,8 @@
       </template>
     </div>
 
+    <GoalsBreakdown :goal="goal" />
+
     <SharedConfirmModal
       v-model="showDeleteConfirm"
       title="Ziel löschen"
