@@ -19,10 +19,20 @@
           :key="row.category"
           class="border-b border-gray-700/50"
         >
-          <td class="py-2 text-gray-200">{{ row.category }}</td>
+          <td class="py-2 text-gray-200">
+            <span class="inline-block w-2.5 h-2.5 rounded-full mr-2" :style="{ backgroundColor: row.color }" />
+            {{ row.category }}
+          </td>
           <td class="py-2 text-right text-gray-300">{{ formatMoney(row.monthly) }}</td>
           <td class="py-2 text-right text-gray-300">{{ formatMoney(row.monthly * 12) }}</td>
-          <td class="py-2 text-right text-gray-400">{{ row.percent }}%</td>
+          <td class="py-2 text-right text-gray-400 w-24">
+            <div class="flex items-center gap-1.5 justify-end">
+              <div class="w-12 h-1.5 rounded-full bg-gray-700 overflow-hidden">
+                <div class="h-full rounded-full" :style="{ width: row.percent + '%', backgroundColor: row.color }" />
+              </div>
+              <span class="w-8 text-right">{{ row.percent }}%</span>
+            </div>
+          </td>
         </tr>
       </tbody>
       <tfoot>
@@ -41,7 +51,14 @@
 const { items } = useBudget()
 const { formatMoney } = useFormatters()
 
-interface Row { category: string; monthly: number; percent: number }
+interface Row { category: string; monthly: number; percent: number; color: string }
+
+const COLORS = [
+  '#f43f5e', '#8b5cf6', '#3b82f6', '#06b6d4', '#10b981',
+  '#f59e0b', '#ec4899', '#6366f1', '#14b8a6', '#f97316',
+  '#a855f7', '#84cc16', '#ef4444', '#0ea5e9', '#d946ef',
+  '#22c55e', '#eab308', '#e11d48', '#7c3aed', '#059669',
+]
 
 const total = computed(() =>
   items.value.filter((i) => i.type === 'expense').reduce((s, i) => s + i.amount, 0),
@@ -54,10 +71,11 @@ const rows = computed<Row[]>(() => {
     byCategory.set(cat, (byCategory.get(cat) ?? 0) + item.amount)
   }
   return Array.from(byCategory.entries())
-    .map(([category, monthly]) => ({
+    .map(([category, monthly], i) => ({
       category,
       monthly,
       percent: total.value > 0 ? Math.round((monthly / total.value) * 100) : 0,
+      color: COLORS[i % COLORS.length],
     }))
     .sort((a, b) => b.monthly - a.monthly)
 })
