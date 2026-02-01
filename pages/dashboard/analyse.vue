@@ -25,6 +25,11 @@
       @analyze="runAnalysis"
     />
 
+    <template v-if="analysis">
+      <AnalysisChatMessages :messages="messages" :loading="isChatLoading" />
+      <AnalysisChatInput :loading="isChatLoading" @send="sendMessage" />
+    </template>
+
     <UAlert
       v-if="error"
       color="red"
@@ -37,5 +42,5 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'dashboard' })
 
-const { analysis, isLoading, error, runAnalysis } = useAnalysis()
+const { analysis, isLoading, isChatLoading, error, messages, runAnalysis, sendMessage } = useAnalysis()
 </script>
